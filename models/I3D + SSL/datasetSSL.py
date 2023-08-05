@@ -27,9 +27,17 @@ class VideoDatasetSSL(Dataset):
         for video_name in videos[:self.total]:
             self.videos.append(os.path.join(path,video_name))
 
-    def load_video(self,path):
+    def load_video(self,path, num_to_extract = 16):
         files = os.listdir(path)
         files.sort(key=lambda x: int(x.split('.')[0]))
+
+        total_images = len(files)
+        step = max(total_images // num_to_extract, 1)
+        files = files[::step]
+
+        if len(files) < num_to_extract:
+            files.append(files[-1])
+
         images = []
         for i, name in enumerate(files):
             path_to_image = path+"/"+name
