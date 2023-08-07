@@ -24,8 +24,11 @@ class VideoDatasetSSL(Dataset):
         path = os.path.join(self.input_path,"Images")
         videos = os.listdir(path)
         videos.sort()
-        for video_name in videos[:self.total]:
-            self.videos.append(os.path.join(path,video_name))
+        for video_name in videos:
+            path_to_video= os.path.join(path,video_name)
+            if os.path.isdir(path_to_video):
+                self.videos.append(path_to_video)
+            if len(self.videos) > self.total:break
 
     def load_video(self,path, num_to_extract = 16):
         files = os.listdir(path)
@@ -65,30 +68,33 @@ class VideoDatasetSSL(Dataset):
     def keypoint_func(self,keypoints_on_images, random_state, parents, hooks):
         return keypoints_on_images
 
-    def add_video_transforms(self, frames, shift_amount):
-        frames = self.temporal_shift(frames, shift_amount)
-        frames = self.RandomHorizontalFlip(frames)
-        
-        rotation_angle = np.random.randint(-10, 10)
-        sigma_value  = np.random.uniform(0, 1.0) 
-        saturation = np.random.randint(0,50)
-        translate = np.random.randint(-10,10)
-        scale_factor = 1.2
+    def add_video_transforms(self, frames, shift_amount, apply = True):
+        if apply:
+            frames = self.temporal_shift(frames, shift_amount)
+            frames = self.RandomHorizontalFlip(frames)
 
-        video_augmenter = iaa.Sequential([
-            #iaa.CoarseDropout((0.1, 0.15), size_percent=(0.03, 0.03)),
-            iaa.Cutout(fill_mode="constant", size =0.3, cval=0, squared=False),
-            iaa.WithHueAndSaturation(
-                iaa.WithChannels(0, iaa.Add(saturation))
-            ),
-            iaa.Lambda(self.apply_channel_shuffle, self.keypoint_func), 
-            iaa.Affine(rotate=(rotation_angle), scale=scale_factor),
-            iaa.TranslateX(px=translate), 
-            iaa.GaussianBlur(sigma=sigma_value), 
-        ], random_order=False)
+            rotation_angle = np.random.randint(-10, 10)
+            sigma_value  = np.random.uniform(0, 1.0) 
+            saturation = np.random.randint(0,50)
+            translate = np.random.randint(-10,10)
+            scale_factor = 1.2
 
-        video_ = video_augmenter(images=frames)
-        return video_
+            video_augmenter = iaa.Sequential([
+                #iaa.CoarseDropout((0.1, 0.15), size_percent=(0.03, 0.03)),
+                iaa.Cutout(fill_mode="constant", size =0.2, cval=0, squared=False),
+                iaa.WithHueAndSaturation(
+                    iaa.WithChannels(0, iaa.Add(saturation))
+                ),
+                iaa.Lambda(self.apply_channel_shuffle, self.keypoint_func), 
+                iaa.Affine(rotate=(rotation_angle), scale=scale_factor),
+                iaa.TranslateX(px=translate), 
+                iaa.GaussianBlur(sigma=sigma_value), 
+            ], random_order=False)
+
+            video_ = video_augmenter(images=frames)
+            return video_
+        else:
+            return frames
 
     def __getitem__(self, idx):
         video_path = self.videos[idx]
@@ -99,8 +105,8 @@ class VideoDatasetSSL(Dataset):
         f_h_positive = self.load_video(path_fh)
         
         shift = np.random.randint(0, 25)
-        f_h_anchor_aug  = self.add_video_transforms(f_h_anchor, shift)
-        s_h_negative_aug = self.add_video_transforms(s_h_negative, shift)
+        f_h_anchor_aug  = self.add_video_transforms(f_h_anchor, shift, False)
+        s_h_negative_aug = self.add_video_transforms(s_h_negative, shift, False)
         f_h_positive_aug = self.add_video_transforms(f_h_positive, shift)
 
         #f_h_anchor_aug = f_h_anchor

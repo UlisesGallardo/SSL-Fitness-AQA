@@ -7,7 +7,7 @@ info_dir = './data/info'
 i3d_pretrained_path = './models/rgb_i3d_pretrained.pt'
 
 # num of frames in a single video
-num_frames = 32
+num_frames = 64
 
 # input data dims;
 C, H, W = 3, 224, 224

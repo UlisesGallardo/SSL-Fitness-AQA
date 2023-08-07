@@ -27,7 +27,7 @@ def get_parser():
     parser.add_argument('--train_batch_size', type=int, default=4, help='batch size for training phase')
     parser.add_argument('--test_batch_size', type=int, default=4, help='batch size for test phase')
     # Dataset
-    parser.add_argument('--dataset_path', type=str, default='./data/FAQA', help='path to FRFS dataset')
+    parser.add_argument('--dataset_path', type=str, default='./FAQA', help='path to FRFS dataset')
 
     return parser
 

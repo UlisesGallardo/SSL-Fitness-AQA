@@ -68,30 +68,31 @@ class VideoDataset(Dataset):
             else: 
                 self.ann[video] = 0
             self.labels.append(self.ann[video])
-            """
-            errores = os.listdir(self.args.dataset_path+"/Labels/")
-            count = 0
-            for file in errores:
-                if file != error:
-                    with open(os.path.join(self.args.dataset_path, 'Labels/'+file), 'r') as file_object:
-                        file_error = json.load(file_object)
-                        if len(file_error[video])>0: 
-                            count+=1
-                            print(file)
-            if count == 0:
-                self.ann[video] = 0
-            else:
-                print("contiene mas de un error")
-            """
+    
         # keys
         self.keys = list(self.ann.keys())
+
+    def extract_part(self, values):
+        total_images = len(values)
+        step = max(total_images // num_frames, 1)
+        new_values = values[::step]
+
+        if len(new_values) < num_frames:
+            new_values.append(values[-1])
+        return new_values
+    
+    def get_path_to_files(self, key):
+        image_list = sorted((glob.glob(os.path.join(os.path.join(self.args.dataset_path, 'Images_200'), key, '*.jpg'))))
+        image_list = self.extract_part(image_list)
+        return image_list 
+
 
     def get_imgs(self, key):
         transform = transforms.Compose([transforms.CenterCrop(H), transforms.ToTensor(),
                                         transforms.Normalize(mean=[0.485, 0.456, 0.406], 
                                         std=[0.229, 0.224, 0.225])])
 
-        image_list = sorted((glob.glob(os.path.join(os.path.join(self.args.dataset_path, 'Images_32'), key, '*.jpg'))))
+        image_list = self.get_path_to_files(key)
         sample_range = np.arange(0, num_frames)  
 
         images = []
