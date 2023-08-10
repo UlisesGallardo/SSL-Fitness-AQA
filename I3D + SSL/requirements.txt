@@ -1,0 +1,14 @@
+imgaug==0.4.0
+msgspec==0.17.0
+numpy==1.15.1
+pandas==0.23.4
+Pillow==5.2.0
+Pillow==10.0.0
+pytorchvideo==0.1.5
+scikit_learn==0.19.2
+scipy==1.1.0
+thop==0.1.1.post2209072238
+torch==2.0.1
+torchvision==0.15.2
+tqdm==4.26.0
+xlrd==1.1.0

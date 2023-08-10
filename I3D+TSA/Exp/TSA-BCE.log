@@ -1,0 +1,38 @@
+------------------------------Exp1------------------------------
+========================================
+model_path: ./Exp/TSA-BCE
+gpu: 0
+log_info: Exp1
+pt_w: None
+dp: True
+TSA: True
+TSA_pos: 7
+temporal_aug: 0
+lr: 0.0001
+weight_decay: 0.0001
+seed: 1
+save: True
+num_epochs: 20
+num_workers: 8
+train_batch_size: 6
+test_batch_size: 6
+dataset_path: ./Dataset/FAQA/OHP/Labeled/
+========================================
+Epoch: 0  Current Best: 0.00 at epoch 0
+	 train Loss: 0.88 F1-GLOBAL: 0.50 F1C0: 0.80 F1C1: 0.20 
+	 val Loss: 0.65 F1-GLOBAL: 0.74 F1C0: 0.85 F1C1: 0.63 
+-----New best found!-----
+Epoch: 1  Current Best: 63.27 at epoch 0
+	 train Loss: 0.66 F1-GLOBAL: 0.77 F1C0: 0.85 F1C1: 0.68 
+	 val Loss: 0.62 F1-GLOBAL: 0.74 F1C0: 0.87 F1C1: 0.62 
+Epoch: 2  Current Best: 63.27 at epoch 0
+	 train Loss: 0.48 F1-GLOBAL: 0.83 F1C0: 0.89 F1C1: 0.78 
+	 val Loss: 0.60 F1-GLOBAL: 0.77 F1C0: 0.83 F1C1: 0.71 
+-----New best found!-----
+Epoch: 3  Current Best: 71.49 at epoch 2
+	 train Loss: 0.30 F1-GLOBAL: 0.91 F1C0: 0.94 F1C1: 0.89 
+	 val Loss: 0.76 F1-GLOBAL: 0.76 F1C0: 0.86 F1C1: 0.66 
+Epoch: 4  Current Best: 71.49 at epoch 2
+	 train Loss: 0.21 F1-GLOBAL: 0.94 F1C0: 0.96 F1C1: 0.92 
+	 val Loss: 0.78 F1-GLOBAL: 0.78 F1C0: 0.86 F1C1: 0.69 
+Epoch: 5  Current Best: 71.49 at epoch 2
