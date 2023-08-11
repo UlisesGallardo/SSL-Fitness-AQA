@@ -24,8 +24,8 @@ def get_parser():
     # Batchsize and epochs
     parser.add_argument('--num_epochs', type=int, default=20, help='number of training epochs')
     parser.add_argument('--num_workers', type=int, default=8, help='number of subprocesses for dataloader')
-    parser.add_argument('--train_batch_size', type=int, default=4, help='batch size for training phase')
-    parser.add_argument('--test_batch_size', type=int, default=4, help='batch size for test phase')
+    parser.add_argument('--train_batch_size', type=int, default=8, help='batch size for training phase')
+    parser.add_argument('--test_batch_size', type=int, default=8, help='batch size for test phase')
     # Dataset
     parser.add_argument('--dataset_path', type=str, default='./FAQA', help='path to FRFS dataset')
 

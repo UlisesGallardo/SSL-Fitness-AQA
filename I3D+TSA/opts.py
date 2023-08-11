@@ -4,7 +4,7 @@ i3d_pretrained_path = './models/rgb_i3d_pretrained.pt'
 
 # num of frames in a single video
 num_frames = 32
-seg_number = 2
+seg_number = 1
 frames_seg = num_frames//seg_number
 
 # input data dims;

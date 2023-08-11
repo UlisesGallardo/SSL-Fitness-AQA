@@ -4,8 +4,8 @@ def get_parser():
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--model_path', type=str, default='Model_1', help='one model per file')
-    parser.add_argument('--gpu', type=str, default='1', help='id of gpu device(s) to be used')
-    parser.add_argument('--log_info', type=str, default='Exp1')
+    parser.add_argument('--gpu', type=str, default='0', help='id of gpu device(s) to be used')
+    parser.add_argument('--log_info', type=str, default='Exp3')
     parser.add_argument('--pt_w', type=str, default=None, help='pre-trained models')
     parser.add_argument('--dp', action="store_true", help='Dropout layer')
 
@@ -16,7 +16,7 @@ def get_parser():
     parser.add_argument('--temporal_aug', type=int, default=0, help='the max of rand temporal shift, ranges 0 to 6')
 
     parser.add_argument('--lr', type=float, default=1e-4, help='learning rate')
-    parser.add_argument('--weight_decay', type=float, default=1e-4, help='L2 weight decay')
+    parser.add_argument('--weight_decay', type=float, default=1e-5, help='L2 weight decay')
     parser.add_argument('--seed', type=int, default=1, help='manual seed')
     parser.add_argument('--save', action='store_true', default=True, help='if set true, save the best model')
 
